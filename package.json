@@ -1,0 +1,25 @@
+{
+  "name": "zwavecontroller",
+  "version": "0.0.0",
+  "description": "A zwave network manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/markomilutin/zwavecontroller"
+  },
+  "keywords": [
+    "zwave",
+    "controller",
+    ""
+  ],
+  "author": "Marko Milutinovic",
+  "license": "BSD",
+  "dependencies": {
+    "serialport": "~1.4.2",
+    "mocha": "~1.21.4",
+    "expect.js": "~0.3.1"
+  }
+}
