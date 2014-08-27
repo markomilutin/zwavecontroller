@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>560</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>MessageHandler: EventEmitter
+--
+-mCommunicationStream
+-mCurrentMessage
+-mRequiredResponseMessageIDs
+-mCurrentResponseMessages
+--
+MessageHandler(callback_)
+AddMessageToSend(txMessage_, listRequiredResponseMessageIDs_)
+MessageReceived(rxMessage_)
+Events:
+    - Tx timeout
+    - Tx response
+    - Unsolicited data
+    - Error
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
