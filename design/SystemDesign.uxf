@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.custom.Systemborder</type>
+    <coordinates>
+      <x>400</x>
+      <y>310</y>
+      <w>280</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>API Interface
+- Accept Incoming Messages
+- Validate Data
+- Handle Application Registration
+- Pass on to ZWaveController
+- Send messages back</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>50</x>
+      <y>160</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Application 1
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>50</x>
+      <y>390</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Application 2
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Actor</type>
+    <coordinates>
+      <x>50</x>
+      <y>660</y>
+      <w>100</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Application 3
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>120</x>
+      <y>180</y>
+      <w>300</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>280;150;130;150;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>110</x>
+      <y>200</y>
+      <w>310</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>30;30;120;150;290;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>120</x>
+      <y>320</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>280;50;110;50;30;100</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>110</x>
+      <y>340</y>
+      <w>310</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>30;100;130;50;290;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>110</x>
+      <y>350</y>
+      <w>310</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>290;50;140;50;30;310</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>120</x>
+      <y>370</y>
+      <w>300</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+UDP</panel_attributes>
+    <additional_attributes>30;320;150;50;280;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Systemborder</type>
+    <coordinates>
+      <x>810</x>
+      <y>310</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>ZWaveController
+- </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Systemborder</type>
+    <coordinates>
+      <x>810</x>
+      <y>590</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>CouchDB
+- Stores base configurations for devices
+- Stores configured node information
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
