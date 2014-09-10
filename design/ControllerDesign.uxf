@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>320</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>Controller
+--
+mZeroQ
+--
+handleConnectionOpen()
+handleConnectionClose()
+handleIncomingRequest(protocolMessage_)
+sendResponse(protocolMessage_)
+commEventHandler(event_, data_)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>20</x>
+      <y>400</y>
+      <w>280</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>GetNetworkNodeList
+--
+Request:
+    {
+        id: 1
+    }
+--
+Response:      
+    {
+        id: 2
+        {
+            node: &lt;#&gt;
+            name: &lt;&gt;
+            deviceType: &lt;&gt;
+        }
+        {
+            node: &lt;#&gt;
+            name: &lt;&gt;
+            deviceType: &lt;&gt;
+        }
+        {
+            node: &lt;#&gt;
+            name: &lt;&gt;
+            deviceType: &lt;&gt;
+        }
+    }</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>350</x>
+      <y>400</y>
+      <w>280</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>RequestUnsollictedMessages
+--
+Request:
+    {
+        id: 3
+        {
+            node: &lt;#&gt;
+        }
+        {
+            node: &lt;#&gt;
+        }        
+    }
+--
+Response:      
+    {
+        id: 4        
+        {
+            node: &lt;#&gt;
+            resp: &lt;Success, Fail&gt;
+            reason: &lt;&gt;
+        }
+        {
+            node: &lt;#&gt;
+            resp: &lt;Success, Fail&gt;
+            reason: &lt;&gt;
+        }
+    }</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>670</x>
+      <y>400</y>
+      <w>280</w>
+      <h>520</h>
+    </coordinates>
+    <panel_attributes>ConfigureNode
+--
+Request:
+    {
+        id: 5
+        {
+            node: &lt;#&gt;
+            name: &lt;&gt;
+        }
+        {
+            node: &lt;#&gt;
+            name: &lt;&gt;
+        }        
+    }
+--
+Response:      
+    {
+        id: 7        
+        {
+            node: &lt;#&gt;
+            resp: &lt;Success, Fail&gt;
+            reason: &lt;&gt;
+        }
+        {
+            node: &lt;#&gt;
+            resp: &lt;Success, Fail&gt;
+            reason: &lt;&gt;
+        }
+    }</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>20</x>
+      <y>900</y>
+      <w>200</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>deviceType
+    - 0x00 Invalid
+    - 0x01 Binary Sensor</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

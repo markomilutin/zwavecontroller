@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>550</x>
+      <y>70</y>
+      <w>630</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>CommControlState: EventEmitter
+--
+static MessageHandler
+static CommControlStates[]
+static CurrentActiveState
+
+--
+CommControlState()
+EnterState()
+MessageToSend(txMessage_)
+HandleRxEvents(rxMessage_)
+HandleMessageHandlerEvent(event_)
+static CheckForStateChange(newState_)
+Events:
+    - Error
+    - CommState
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>300</x>
+      <y>520</y>
+      <w>320</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>CommControlInitSerial: CommControlState
+--
+--
+CommControlInitSerial()
+EnterState()
+HandleMessageHandlerEvent(event_)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>400</x>
+      <y>300</y>
+      <w>380</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>360;30;30;220</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>520</y>
+      <w>290</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>CommControlReset:CommControlState
+--
+--
+CommControlReset()
+EnterState()
+HandleMessageHandlerEvent(event_)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>50</x>
+      <y>300</y>
+      <w>590</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>570;30;30;220</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>730</x>
+      <y>300</y>
+      <w>170</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>150;30;30;220</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>630</x>
+      <y>520</y>
+      <w>350</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>CommControlInitController: CommControlState
+--
+--
+CommControlInitController()
+EnterState()
+HandleMessageHandlerEvent(event_)
+HandleRxEvents(rxMessage_)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>930</x>
+      <y>300</y>
+      <w>210</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>30;30;190;220</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>990</x>
+      <y>520</y>
+      <w>330</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>CommControlNodeSetup: CommControlState
+--
+--
+CommControlNodeSetup()
+EnterState()
+HandleMessageHandlerEvent(event_)
+HandleRxEvents(rxMessage_)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1330</x>
+      <y>520</y>
+      <w>360</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>CommControlActive: CommControlState
+--
+mListOfMessagesToSend
+--
+CommControlActive()
+EnterState()
+MessageToSend(txMessage_)
+HandleRxEvents(rxMessage_)
+HandleMessageHandlerEvent(event_)
+Events:
+    - Rx response
+    - Rx unsolicited
+    - Tx failure
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1070</x>
+      <y>300</y>
+      <w>410</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>30;30;390;220</additional_attributes>
+  </element>
+</diagram>
