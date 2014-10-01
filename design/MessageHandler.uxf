@@ -4,28 +4,655 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>20</x>
-      <y>20</y>
+      <x>90</x>
+      <y>30</y>
       <w>560</w>
-      <h>270</h>
+      <h>320</h>
     </coordinates>
     <panel_attributes>MessageHandler: EventEmitter
 --
--mCommunicationStream
--mCurrentMessage
--mRequiredResponseMessageIDs
--mCurrentResponseMessages
+mCommunicationStream
+mCurrentMessage
+mRequiredResponseMessageIDs
+mCurrentResponseMessages
+mReady
 --
 MessageHandler(callback_)
+OpenHandler()
+CloseHandler()
 AddMessageToSend(txMessage_, listRequiredResponseMessageIDs_)
 MessageReceived(rxMessage_)
 Events:
     - Tx timeout
     - Tx response
     - Unsolicited data
+    - Comm State
     - Error
 
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>1770</x>
+      <y>0</y>
+      <w>410</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>title: sample
+_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
+id1-&gt;&gt;id2:id1,id2
+id2-/&gt;id1:async Msg.
+id3-&gt;&gt;&gt;id1:id1,id3
+id1.&gt;id3:id1,id3:async return Msg
+id1-&gt;id1:id1:self
+iframe{:interaction frame
+id2-&gt;id3:id1,id3:async Msg.
+iframe}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>90</x>
+      <y>390</y>
+      <w>1540</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>Sending Message
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>170</x>
+      <y>440</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStateMachine
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>620</x>
+      <y>440</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>MessageHandler
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1120</x>
+      <y>440</y>
+      <w>260</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>430</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>430</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1230</x>
+      <y>430</y>
+      <w>50</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;470</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>460</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+AddMessageToSend()</panel_attributes>
+    <additional_attributes>480;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>480</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Return Sucess</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>530</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+AddMessageToSend()</panel_attributes>
+    <additional_attributes>480;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>560</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Return Error (1 outstanding message allowed)</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>500</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Write()</panel_attributes>
+    <additional_attributes>550;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>600</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Rx Data</panel_attributes>
+    <additional_attributes>30;50;550;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>670</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Rx Data (Final)</panel_attributes>
+    <additional_attributes>30;50;550;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>690</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Tx Response Event</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>760</x>
+      <y>660</y>
+      <w>300</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Keep receiving data untill all required
+response messages are received</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>90</x>
+      <y>940</y>
+      <w>1540</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>Sending Message Timeout
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>1770</x>
+      <y>550</y>
+      <w>410</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>title: sample
+_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
+id1-&gt;&gt;id2:id1,id2
+id2-/&gt;id1:async Msg.
+id3-&gt;&gt;&gt;id1:id1,id3
+id1.&gt;id3:id1,id3:async return Msg
+id1-&gt;id1:id1:self
+iframe{:interaction frame
+id2-&gt;id3:id1,id3:async Msg.
+iframe}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>170</x>
+      <y>990</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStateMachine
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>620</x>
+      <y>990</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>MessageHandler
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1120</x>
+      <y>990</y>
+      <w>260</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>980</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>980</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1230</x>
+      <y>980</y>
+      <w>50</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;470</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1010</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+AddMessageToSend()</panel_attributes>
+    <additional_attributes>480;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1030</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Return Sucess</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1050</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Write()</panel_attributes>
+    <additional_attributes>550;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1180</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Tx Timeout Event</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1110</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Write()</panel_attributes>
+    <additional_attributes>550;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>750</x>
+      <y>1110</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Timeout #1
+Retry #1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>750</x>
+      <y>1170</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>.
+.
+.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>1770</x>
+      <y>1100</y>
+      <w>410</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>title: sample
+_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
+id1-&gt;&gt;id2:id1,id2
+id2-/&gt;id1:async Msg.
+id3-&gt;&gt;&gt;id1:id1,id3
+id1.&gt;id3:id1,id3:async return Msg
+id1-&gt;id1:id1:self
+iframe{:interaction frame
+id2-&gt;id3:id1,id3:async Msg.
+iframe}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>90</x>
+      <y>1490</y>
+      <w>1540</w>
+      <h>510</h>
+    </coordinates>
+    <panel_attributes>Sending Message Unsolicited Rx
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>170</x>
+      <y>1540</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStateMachine
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>620</x>
+      <y>1540</y>
+      <w>240</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>MessageHandler
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1120</x>
+      <y>1540</y>
+      <w>260</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>CommunicationStream
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1530</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1530</y>
+      <w>50</w>
+      <h>480</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;460</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1230</x>
+      <y>1530</y>
+      <w>50</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>30;30;30;470</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1560</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+AddMessageToSend()</panel_attributes>
+    <additional_attributes>480;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1580</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Return Sucess</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1600</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Write()</panel_attributes>
+    <additional_attributes>550;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1650</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Unsolicited Rx Data</panel_attributes>
+    <additional_attributes>30;50;550;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1800</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Rx Data (Final)</panel_attributes>
+    <additional_attributes>30;50;550;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1820</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Tx Response Event</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>760</x>
+      <y>1760</y>
+      <w>300</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Resend original message</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>1770</x>
+      <y>1650</y>
+      <w>410</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>title: sample
+_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
+id1-&gt;&gt;id2:id1,id2
+id2-/&gt;id1:async Msg.
+id3-&gt;&gt;&gt;id1:id1,id3
+id1.&gt;id3:id1,id3:async return Msg
+id1-&gt;id1:id1:self
+iframe{:interaction frame
+id2-&gt;id3:id1,id3:async Msg.
+iframe}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>260</x>
+      <y>1680</y>
+      <w>500</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Unsolicited Rx Event</panel_attributes>
+    <additional_attributes>30;50;480;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>710</x>
+      <y>1770</y>
+      <w>570</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;
+Write()</panel_attributes>
+    <additional_attributes>550;50;30;50</additional_attributes>
   </element>
 </diagram>

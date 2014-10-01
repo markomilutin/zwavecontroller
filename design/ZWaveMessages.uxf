@@ -4,47 +4,50 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>60</x>
-      <y>40</y>
-      <w>310</w>
-      <h>220</h>
+      <x>40</x>
+      <y>60</y>
+      <w>350</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>BaseMessage
 --
--mType
--mFunctionID
--mDataBuffer
--mDataLength
--mCallbackID
--mCS
--mValid
+mType
+mFunctionID
+mDataBuffer
+mDataBufferLen
+mCallbackID
+mCS
+mValid
 --
--BaseMessage(rawBuffer_, callback_)
--setData(messageInfo_, callback_)
--getData(callback_)
--sendMessage(stream_, callback_)
+BaseMessage(rawBuffer_)
+clear()
+parseRawBuffer(rawBuffer_, rawBufferSize_)
+getData()
+setData(messageInfo_)
+generateMessageBuffer()
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>530</x>
-      <y>40</y>
-      <w>310</w>
-      <h>220</h>
+      <x>550</x>
+      <y>100</y>
+      <w>170</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>ACK:BaseMessage
 --
 --
--ACK(rawBuffer)
+ACK(rawBuffer)
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>340</x>
+      <x>360</x>
       <y>90</y>
       <w>210</w>
       <h>70</h>
@@ -57,31 +60,50 @@ Inherits
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>530</x>
-      <y>330</y>
-      <w>310</w>
-      <h>220</h>
+      <x>730</x>
+      <y>140</y>
+      <w>210</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>GetVersion:BaseMessage
 --
 --
--BaseMessage(rawBuffer)
--setData(messageData)
--getData()
+BaseMessage(rawBuffer)
+setData(messageData)
+getData()
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>340</x>
+      <x>360</x>
       <y>140</y>
-      <w>210</w>
-      <h>260</h>
+      <w>390</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 Inherits
 </panel_attributes>
-    <additional_attributes>30;30;110;30;110;240;190;240</additional_attributes>
+    <additional_attributes>30;50;110;50;370;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>80</x>
+      <y>340</y>
+      <w>310</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>MessageBuilder
+--
+--
+static CreateAck()
+static CreateNack()
+static CreateCAN()
+static GetMessage(rawData_)
+
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
