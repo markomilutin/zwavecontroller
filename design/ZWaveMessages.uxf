@@ -19,12 +19,12 @@ mCallbackID
 mCS
 mValid
 --
-BaseMessage(rawBuffer_)
-clear()
-parseRawBuffer(rawBuffer_, rawBufferSize_)
+BaseMessage(rawBuffer_, rawBufferSize_)
 getData()
 setData(messageInfo_)
 generateMessageBuffer()
+-_clear()
+-_parseRawBuffer(rawBuffer_, rawBufferSize_)
 
 </panel_attributes>
     <additional_attributes/>
@@ -32,45 +32,48 @@ generateMessageBuffer()
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>550</x>
-      <y>100</y>
-      <w>170</w>
-      <h>60</h>
+      <x>540</x>
+      <y>60</y>
+      <w>210</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>ACK:BaseMessage
 --
 --
 ACK(rawBuffer)
-</panel_attributes>
+setData(messageInfo_)
+generateMessageBuffer()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>360</x>
-      <y>90</y>
-      <w>210</w>
+      <y>50</y>
+      <w>200</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 Inherits
 </panel_attributes>
-    <additional_attributes>30;50;190;50</additional_attributes>
+    <additional_attributes>30;50;180;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>730</x>
-      <y>140</y>
-      <w>210</w>
-      <h>100</h>
+      <x>1100</x>
+      <y>250</y>
+      <w>440</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>GetVersion:BaseMessage
 --
+mControllerVersion
 --
 BaseMessage(rawBuffer)
 setData(messageData)
 getData()
+-_parseDataBuffer(dataBuffer_, dataBufferSize_)
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -78,20 +81,20 @@ getData()
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>360</x>
-      <y>140</y>
-      <w>390</w>
+      <y>250</y>
+      <w>760</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 Inherits
 </panel_attributes>
-    <additional_attributes>30;50;110;50;370;50</additional_attributes>
+    <additional_attributes>30;50;650;50;740;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>80</x>
-      <y>340</y>
+      <x>50</x>
+      <y>450</y>
       <w>310</w>
       <h>220</h>
     </coordinates>
@@ -104,6 +107,35 @@ static CreateCAN()
 static GetMessage(rawData_)
 
 </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>170</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Inherits
+</panel_attributes>
+    <additional_attributes>30;50;180;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>540</x>
+      <y>180</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>NACK:BaseMessage
+--
+--
+NACK(rawBuffer)
+setData(messageInfo_)
+generateMessageBuffer()</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

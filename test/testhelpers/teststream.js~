@@ -1,0 +1,21 @@
+'use strict';
+
+const events = require('events');
+
+function TestStream () {
+    this.close = function() {
+        return;
+    };
+
+    this.on = function() {
+      return;
+    }
+}
+
+util.inherits(TestStream, events.EventEmitter);
+
+//Expose module methods
+exports.TestStream = TestStream;
+exports.getInstance = function() {
+  return new TestStream();
+}

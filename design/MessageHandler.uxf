@@ -4,10 +4,10 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>90</x>
-      <y>30</y>
+      <x>40</x>
+      <y>0</y>
       <w>560</w>
-      <h>320</h>
+      <h>350</h>
     </coordinates>
     <panel_attributes>MessageHandler: EventEmitter
 --
@@ -16,13 +16,18 @@ mCurrentMessage
 mRequiredResponseMessageIDs
 mCurrentResponseMessages
 mReady
+mRetries
 --
-MessageHandler(callback_)
+MessageHandler(stream_)
 OpenHandler()
 CloseHandler()
 AddMessageToSend(txMessage_, listRequiredResponseMessageIDs_)
-MessageReceived(rxMessage_)
+_rxData(data_)
+_handleTxTimeout()
+_sendMessage()
 Events:
+    - Active
+    - Inactive
     - Tx timeout
     - Tx response
     - Unsolicited data
@@ -33,30 +38,10 @@ Events:
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.SequenceDiagram</type>
-    <coordinates>
-      <x>1770</x>
-      <y>0</y>
-      <w>410</w>
-      <h>350</h>
-    </coordinates>
-    <panel_attributes>title: sample
-_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
-id1-&gt;&gt;id2:id1,id2
-id2-/&gt;id1:async Msg.
-id3-&gt;&gt;&gt;id1:id1,id3
-id1.&gt;id3:id1,id3:async return Msg
-id1-&gt;id1:id1:self
-iframe{:interaction frame
-id2-&gt;id3:id1,id3:async Msg.
-iframe}</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.custom.InteractionFrame</type>
     <coordinates>
-      <x>90</x>
-      <y>390</y>
+      <x>40</x>
+      <y>360</y>
       <w>1540</w>
       <h>510</h>
     </coordinates>
@@ -67,8 +52,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>170</x>
-      <y>440</y>
+      <x>120</x>
+      <y>410</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -79,8 +64,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
-      <y>440</y>
+      <x>570</x>
+      <y>410</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -91,8 +76,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1120</x>
-      <y>440</y>
+      <x>1070</x>
+      <y>410</y>
       <w>260</w>
       <h>20</h>
     </coordinates>
@@ -103,8 +88,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>430</y>
+      <x>210</x>
+      <y>400</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -114,8 +99,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>430</y>
+      <x>660</x>
+      <y>400</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -125,8 +110,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1230</x>
-      <y>430</y>
+      <x>1180</x>
+      <y>400</y>
       <w>50</w>
       <h>490</h>
     </coordinates>
@@ -136,8 +121,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>460</y>
+      <x>210</x>
+      <y>430</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -148,8 +133,8 @@ AddMessageToSend()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>480</y>
+      <x>210</x>
+      <y>450</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -160,8 +145,8 @@ Return Sucess</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>530</y>
+      <x>210</x>
+      <y>500</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -172,8 +157,8 @@ AddMessageToSend()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>560</y>
+      <x>210</x>
+      <y>530</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -184,8 +169,8 @@ Return Error (1 outstanding message allowed)</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>500</y>
+      <x>660</x>
+      <y>470</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -196,8 +181,8 @@ Write()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>600</y>
+      <x>660</x>
+      <y>570</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -208,8 +193,8 @@ Rx Data</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>670</y>
+      <x>660</x>
+      <y>640</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -220,8 +205,8 @@ Rx Data (Final)</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>690</y>
+      <x>210</x>
+      <y>660</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -232,8 +217,8 @@ Tx Response Event</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>760</x>
-      <y>660</y>
+      <x>710</x>
+      <y>630</y>
       <w>300</w>
       <h>40</h>
     </coordinates>
@@ -244,8 +229,8 @@ response messages are received</panel_attributes>
   <element>
     <type>com.umlet.element.custom.InteractionFrame</type>
     <coordinates>
-      <x>90</x>
-      <y>940</y>
+      <x>40</x>
+      <y>910</y>
       <w>1540</w>
       <h>510</h>
     </coordinates>
@@ -254,30 +239,10 @@ response messages are received</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.SequenceDiagram</type>
-    <coordinates>
-      <x>1770</x>
-      <y>550</y>
-      <w>410</w>
-      <h>350</h>
-    </coordinates>
-    <panel_attributes>title: sample
-_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
-id1-&gt;&gt;id2:id1,id2
-id2-/&gt;id1:async Msg.
-id3-&gt;&gt;&gt;id1:id1,id3
-id1.&gt;id3:id1,id3:async return Msg
-id1-&gt;id1:id1:self
-iframe{:interaction frame
-id2-&gt;id3:id1,id3:async Msg.
-iframe}</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>170</x>
-      <y>990</y>
+      <x>120</x>
+      <y>960</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -288,8 +253,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
-      <y>990</y>
+      <x>570</x>
+      <y>960</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -300,8 +265,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1120</x>
-      <y>990</y>
+      <x>1070</x>
+      <y>960</y>
       <w>260</w>
       <h>20</h>
     </coordinates>
@@ -312,8 +277,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>980</y>
+      <x>210</x>
+      <y>950</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -323,8 +288,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>980</y>
+      <x>660</x>
+      <y>950</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -334,8 +299,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1230</x>
-      <y>980</y>
+      <x>1180</x>
+      <y>950</y>
       <w>50</w>
       <h>490</h>
     </coordinates>
@@ -345,8 +310,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1010</y>
+      <x>210</x>
+      <y>980</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -357,8 +322,8 @@ AddMessageToSend()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1030</y>
+      <x>210</x>
+      <y>1000</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -369,8 +334,8 @@ Return Sucess</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1050</y>
+      <x>660</x>
+      <y>1020</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -381,8 +346,8 @@ Write()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1180</y>
+      <x>210</x>
+      <y>1150</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -393,8 +358,8 @@ Tx Timeout Event</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1110</y>
+      <x>660</x>
+      <y>1080</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -405,8 +370,8 @@ Write()</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>750</x>
-      <y>1110</y>
+      <x>700</x>
+      <y>1080</y>
       <w>160</w>
       <h>40</h>
     </coordinates>
@@ -417,8 +382,8 @@ Retry #1</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>750</x>
-      <y>1170</y>
+      <x>700</x>
+      <y>1140</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -428,30 +393,10 @@ Retry #1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.SequenceDiagram</type>
-    <coordinates>
-      <x>1770</x>
-      <y>1100</y>
-      <w>410</w>
-      <h>350</h>
-    </coordinates>
-    <panel_attributes>title: sample
-_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
-id1-&gt;&gt;id2:id1,id2
-id2-/&gt;id1:async Msg.
-id3-&gt;&gt;&gt;id1:id1,id3
-id1.&gt;id3:id1,id3:async return Msg
-id1-&gt;id1:id1:self
-iframe{:interaction frame
-id2-&gt;id3:id1,id3:async Msg.
-iframe}</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.custom.InteractionFrame</type>
     <coordinates>
-      <x>90</x>
-      <y>1490</y>
+      <x>40</x>
+      <y>1460</y>
       <w>1540</w>
       <h>510</h>
     </coordinates>
@@ -462,8 +407,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>170</x>
-      <y>1540</y>
+      <x>120</x>
+      <y>1510</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -474,8 +419,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
-      <y>1540</y>
+      <x>570</x>
+      <y>1510</y>
       <w>240</w>
       <h>20</h>
     </coordinates>
@@ -486,8 +431,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>1120</x>
-      <y>1540</y>
+      <x>1070</x>
+      <y>1510</y>
       <w>260</w>
       <h>20</h>
     </coordinates>
@@ -498,8 +443,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1530</y>
+      <x>210</x>
+      <y>1500</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -509,8 +454,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1530</y>
+      <x>660</x>
+      <y>1500</y>
       <w>50</w>
       <h>480</h>
     </coordinates>
@@ -520,8 +465,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1230</x>
-      <y>1530</y>
+      <x>1180</x>
+      <y>1500</y>
       <w>50</w>
       <h>490</h>
     </coordinates>
@@ -531,8 +476,8 @@ iframe}</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1560</y>
+      <x>210</x>
+      <y>1530</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -543,8 +488,8 @@ AddMessageToSend()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1580</y>
+      <x>210</x>
+      <y>1550</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -555,8 +500,8 @@ Return Sucess</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1600</y>
+      <x>660</x>
+      <y>1570</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -567,8 +512,8 @@ Write()</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1650</y>
+      <x>660</x>
+      <y>1620</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -579,8 +524,8 @@ Unsolicited Rx Data</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1800</y>
+      <x>660</x>
+      <y>1770</y>
       <w>570</w>
       <h>70</h>
     </coordinates>
@@ -591,8 +536,8 @@ Rx Data (Final)</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1820</y>
+      <x>210</x>
+      <y>1790</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -603,8 +548,8 @@ Tx Response Event</panel_attributes>
   <element>
     <type>com.umlet.element.Note</type>
     <coordinates>
-      <x>760</x>
-      <y>1760</y>
+      <x>710</x>
+      <y>1730</y>
       <w>300</w>
       <h>40</h>
     </coordinates>
@@ -612,30 +557,10 @@ Tx Response Event</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <type>com.umlet.element.SequenceDiagram</type>
-    <coordinates>
-      <x>1770</x>
-      <y>1650</y>
-      <w>410</w>
-      <h>350</h>
-    </coordinates>
-    <panel_attributes>title: sample
-_alpha:A~id1_|_beta:B~id2_|_gamma:G~id3_
-id1-&gt;&gt;id2:id1,id2
-id2-/&gt;id1:async Msg.
-id3-&gt;&gt;&gt;id1:id1,id3
-id1.&gt;id3:id1,id3:async return Msg
-id1-&gt;id1:id1:self
-iframe{:interaction frame
-id2-&gt;id3:id1,id3:async Msg.
-iframe}</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>260</x>
-      <y>1680</y>
+      <x>210</x>
+      <y>1650</y>
       <w>500</w>
       <h>70</h>
     </coordinates>
@@ -646,8 +571,8 @@ Unsolicited Rx Event</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>710</x>
-      <y>1770</y>
+      <x>660</x>
+      <y>1740</y>
       <w>570</w>
       <h>70</h>
     </coordinates>

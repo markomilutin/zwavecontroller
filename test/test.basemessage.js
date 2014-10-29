@@ -2,6 +2,7 @@
 
 const expect = require('expect.js');
 const baseMessage = require('../lib/zwavemessages/basemessage.js');
+const baseMessagePrivate = require('../lib/zwavemessages/basemessage.js').testingPrivate;
 const zutil = require('../lib/zwaveutil.js');
 
 suite('BaseMessage', function() {
@@ -55,21 +56,21 @@ suite('BaseMessage', function() {
 
       done();
     });
-  test('parseRawBuffer buffer size less than minimum' +
+  test('_parseRawBuffer buffer size less than minimum' +
        '\n\tPurpose: Pass in buffer size that is less than minimum required' +
        '\n\tExpectation: An Error should be generated',
     function(done) {
       var testBuffer = new Buffer(10);
       var message = new baseMessage.getInstance(null, 0);
 
-      var result = message.parseRawBuffer(testBuffer, 4);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 4);
 
       expect(result).to.be.an(Error);
       expect(result.message).to.be('rawBufferSize_ less than minimum');
 
       done();
     });
-  test('parseRawBuffer first byte not SOF' +
+  test('_parseRawBuffer first byte not SOF' +
        '\n\tPurpose: Pass in buffer whose first byte is not SOF' +
        '\n\tExpectation: An Error should be generated',
     function(done) {
@@ -77,14 +78,14 @@ suite('BaseMessage', function() {
       var message = new baseMessage.getInstance(null, 0);
 
       testBuffer[0] = 0x1B;
-      var result = message.parseRawBuffer(testBuffer, 10);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 10);
 
       expect(result).to.be.an(Error);
       expect(result.message).to.be('first byte not SOF');
 
       done();
     });
-  test('parseRawBuffer length invalid' +
+  test('_parseRawBuffer length invalid' +
        '\n\tPurpose: Pass in buffer whose length byte does not represent the message' +
        '\n\tExpectation: An Error should be generated',
     function(done) {
@@ -93,14 +94,14 @@ suite('BaseMessage', function() {
 
       testBuffer[0] = zutil.SOF;
       testBuffer[1] = 30;
-      var result = message.parseRawBuffer(testBuffer, 10);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 10);
 
       expect(result).to.be.an(Error);
       expect(result.message).to.be('invalid length byte');
 
       done();
     });
-  test('parseRawBuffer cs invalid' +
+  test('_parseRawBuffer cs invalid' +
        '\n\tPurpose: Pass in buffer whose cs byte is not valid' +
        '\n\tExpectation: An Error should be generated',
     function(done) {
@@ -114,15 +115,15 @@ suite('BaseMessage', function() {
       testBuffer[4] = 0x02;
       testBuffer[5] = 0xFF; // CS
 
-      var result = message.parseRawBuffer(testBuffer, 6);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 6);
 
       expect(result).to.be.an(Error);
       expect(result.message).to.be('invalid checksum');
 
       done();
     });
-  test('parseRawBuffer message type invalid' +
-       '\n\tPurpose: Pass in buffer whose message type byte is not valid' +
+  test('_parseRawBuffer message type request' +
+       '\n\tPurpose: Pass in buffer whose message type byte is a request' +
        '\n\tExpectation: An Error should be generated',
     function(done) {
       var testBuffer = new Buffer(10);
@@ -134,14 +135,14 @@ suite('BaseMessage', function() {
       testBuffer[3] = 0x01;
       testBuffer[4] = 0x02;
       testBuffer[5] = zutil.calcCS(testBuffer.slice(1,5), 4); // CS
-      var result = message.parseRawBuffer(testBuffer, 6);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 6);
 
       expect(result).to.be.an(Error);
-      expect(result.message).to.be('invalid message type [5]');
+      expect(result.message).to.be('expecting response message');
 
       done();
     });
-  test('parseRawBuffer valid message' +
+  test('_parseRawBuffer valid message' +
        '\n\tPurpose: Pass in buffer which contains valid message' +
        '\n\tExpectation: No error should be generated and fields should be properly populated',
     function(done) {
@@ -152,20 +153,20 @@ suite('BaseMessage', function() {
 
       testBuffer[0] = zutil.SOF;
       testBuffer[1] = 6;
-      testBuffer[2] = zutil.REQUEST;
+      testBuffer[2] = zutil.RESPONSE;
       testBuffer[3] = 0x03;
       testBuffer[4] = 0x01;
       testBuffer[5] = 0x02;
       testBuffer[6] = 0x03;
       testBuffer[7] = zutil.calcCS(testBuffer.slice(1,7), 6); // CS
 
-      var result = message.parseRawBuffer(testBuffer, 8);
+      var result = baseMessagePrivate._parseRawBuffer.call(message, testBuffer, 8);
 
       expect(result).to.be(true);
 
       expect(message.mValid).to.be(true);
 
-      expect(message.mType).to.equal(zutil.REQUEST);
+      expect(message.mType).to.equal(zutil.RESPONSE);
       expect(message.mFunctionID).to.equal(0x03);
       expect(message.mDataBuffer).not.equal(null);
       expect(message.mDataBufferLen).to.equal(3);
@@ -185,7 +186,7 @@ suite('BaseMessage', function() {
 
       testBuffer[0] = zutil.SOF;
       testBuffer[1] = 6;
-      testBuffer[2] = zutil.REQUEST;
+      testBuffer[2] = zutil.RESPONSE;
       testBuffer[3] = 0x03;
       testBuffer[4] = 0x01;
       testBuffer[5] = 0x02;
@@ -198,7 +199,7 @@ suite('BaseMessage', function() {
 
       expect(message.mValid).to.be(true);
 
-      expect(message.mType).to.equal(zutil.REQUEST);
+      expect(message.mType).to.equal(zutil.RESPONSE);
       expect(message.mFunctionID).to.equal(0x03);
       expect(message.mDataBuffer).not.equal(null);
       expect(message.mDataBufferLen).to.equal(3);
@@ -236,7 +237,7 @@ suite('BaseMessage', function() {
       var testBuffer = new Buffer(10);
       testBuffer[0] = zutil.SOF;
       testBuffer[1] = 6;
-      testBuffer[2] = zutil.REQUEST;
+      testBuffer[2] = zutil.RESPONSE;
       testBuffer[3] = 0x03;
       testBuffer[4] = 0xAC;
       testBuffer[5] = 0xFE;
@@ -250,7 +251,7 @@ suite('BaseMessage', function() {
       var messageData = message.getData();
 
       expect(messageData).not.equal(null);
-      expect(messageData['type']).to.equal(zutil.REQUEST);
+      expect(messageData['type']).to.equal(zutil.RESPONSE);
       expect(messageData['functionID']).to.equal(0x03);
       expect(messageData['data']).not.equal(null);
       expect(messageData['data'][0]).to.equal(0xAC);
@@ -350,6 +351,78 @@ suite('BaseMessage', function() {
       expect(messageRawBuffer[7]).to.equal(0xAD);
       expect(messageRawBuffer[8]).to.equal(0x11);
       expect(messageRawBuffer[9]).to.equal(0xE2);
+
+      done();
+    });
+
+  test('generateMessageBuffer valid message no data' +
+       '\n\tPurpose: Attempt to generate the message buffer valid but there is no data ' +
+       '\n\tExpectation: Raw message buffer should be returned',
+    function(done) {
+
+      var message = new baseMessage.getInstance(null, 0);
+      expect(message).not.equal(null);
+
+      message.mValid = true;
+      message.mType = zutil.REQUEST;
+      message.mFunctionID = 0x04;
+      message.mDataBufferLen = 0;
+      message.mDataBuffer = null;
+
+      var messageRawBuffer = message.generateMessageBuffer();
+
+      expect(messageRawBuffer).not.be(Error);
+      expect(messageRawBuffer).not.equal(null);
+      expect(messageRawBuffer.length).to.equal(5);
+      expect(messageRawBuffer[0]).to.equal(zutil.SOF);
+      expect(messageRawBuffer[1]).to.equal(3);
+      expect(messageRawBuffer[2]).to.equal(zutil.REQUEST);
+      expect(messageRawBuffer[3]).to.equal(0x04);
+      expect(messageRawBuffer[4]).to.equal(248);
+
+      done();
+    });
+
+  test('generateMessageBuffer valid message null data but data len not 0' +
+       '\n\tPurpose: Attempt to generate the message buffer valid but data is indicated but the data buffer is null and the data len is not 0 ' +
+       '\n\tExpectation: An error should be returned',
+    function(done) {
+
+      var message = new baseMessage.getInstance(null, 0);
+      expect(message).not.equal(null);
+
+      message.mValid = true;
+      message.mType = zutil.REQUEST;
+      message.mFunctionID = 0x04;
+      message.mDataBufferLen = 3;
+      message.mDataBuffer = null;
+
+      var messageRawBuffer = message.generateMessageBuffer();
+
+      expect(messageRawBuffer).to.be.an(Error);
+      expect(messageRawBuffer.message).to.be('mDataBuffer null but mDataBufferLen indicates data');
+
+      done();
+    });
+
+  test('generateMessageBuffer valid message not null data but data len 0' +
+       '\n\tPurpose: Attempt to generate the message buffer that is valid, data buffer is not null and the data len is 0 ' +
+       '\n\tExpectation: An error should be returned',
+    function(done) {
+
+      var message = new baseMessage.getInstance(null, 0);
+      expect(message).not.equal(null);
+
+      message.mValid = true;
+      message.mType = zutil.REQUEST;
+      message.mFunctionID = 0x04;
+      message.mDataBufferLen = 0;
+      message.mDataBuffer = new Buffer(3);
+
+      var messageRawBuffer = message.generateMessageBuffer();
+
+      expect(messageRawBuffer).to.be.an(Error);
+      expect(messageRawBuffer.message).to.be('mDataBuffer not null but mDataBufferLen indicates 0');
 
       done();
     });
